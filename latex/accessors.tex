@@ -269,17 +269,17 @@ manually or via the \codeinline{parallel_for} as in
 \ref{listing.accessors.range}.
 
 \begin{lstlisting}[label=listing.accessors.range]
-    myQueue.submit([&](handler &cgh) {
-      auto singleRange = range<3>(8, 16, 16);
-      auto offset = id<3>(8, 0, 0);
-      // We define the subset of the accessor we require for the kernel
-      accessor<int, 1, access::mode::read_write, access::target::global_buffer>
-          ptr(syclBuffer, cgh, singleRange, offset);
-      // We offset the kernel by the same value to match indexes
-      cgh.parallel_for<kernel>(singleRange, offset, [=](item<3> itemID) {
-        ptr[itemID.get_linear_id()] = 2;
-      });
-    });
+myQueue.submit([&](handler &cgh) {
+  auto singleRange = range<3>(8, 16, 16);
+  auto offset = id<3>(8, 0, 0);
+  // We define the subset of the accessor we require for the kernel
+  accessor<int, 1, access::mode::read_write, access::target::global_buffer>
+      ptr(syclBuffer, cgh, singleRange, offset);
+  // We offset the kernel by the same value to match indexes
+  cgh.parallel_for<kernel>(singleRange, offset, [=](item<3> itemID) {
+    ptr[itemID.get_linear_id()] = 2;
+  });
+});
 \end{lstlisting}
 
 A buffer accessor with access target \codeinline{access::target::global_buffer}
