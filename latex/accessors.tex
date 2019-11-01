@@ -268,7 +268,9 @@ from \codeinline{\{0,0,0\}}. This allows the offset to be provided either
 manually or via the \codeinline{parallel_for} as in
 \ref{listing.accessors.range}.
 
-\begin{lstlisting}[label=listing.accessors.range]
+\begin{lstlisting}[label=listing.accessors.range, captionpos=b,
+  caption={Example using an offset in
+    \codeinline{accessor} and \codeinline{parallel_for}}]
 myQueue.submit([&](handler &cgh) {
   auto singleRange = range<3>(8, 16, 16);
   auto offset = id<3>(8, 0, 0);
